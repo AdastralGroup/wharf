@@ -11,23 +11,27 @@
 // This allows us to handle renames gracefully (incl. partial rewrites)
 //
 // Definitions
-//   Source: The final content.
-//   Target: The content to be made into final content.
-//   Signature: The sequence of hashes used to identify the content.
+//
+//	Source: The final content.
+//	Target: The content to be made into final content.
+//	Signature: The sequence of hashes used to identify the content.
 package wsync
 
 import (
-	"crypto/md5"
+	"encoding/hex"
+	"github.com/itchio/lake"
+	"github.com/minio/highwayhash"
+	"github.com/pkg/errors"
 	"io"
 	"os"
-
-	"github.com/itchio/lake"
-	"github.com/pkg/errors"
 )
 
 // MaxDataOp is the maximum number of 'fresh bytes' that can be contained
 // in a single Data operation
 const MaxDataOp = (4 * 1024 * 1024)
+
+var key, err = hex.DecodeString("74686973206e6565647320746f206265203332206368617273206c6f6e672e2e")
+var hh, err2 = highwayhash.New(key)
 
 // NewContext creates a new Context, given a blocksize.
 // It uses MD5 as a 'strong hash' (in the sense of an RSync paper,
@@ -35,7 +39,7 @@ const MaxDataOp = (4 * 1024 * 1024)
 func NewContext(BlockSize int) *Context {
 	return &Context{
 		blockSize:    BlockSize,
-		uniqueHasher: md5.New(),
+		uniqueHasher: hh,
 	}
 }
 

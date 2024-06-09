@@ -23,7 +23,9 @@ require (
 	github.com/itchio/screw v0.0.0-20200301160148-75fc2d65fb38
 	github.com/jgallagher/gosaca v0.0.0-20130226042358-754749770f08
 	github.com/klauspost/compress v1.10.9 // indirect
+	github.com/minio/highwayhash v1.0.2 // indirect
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.8.4
+	golang.org/x/sys v0.21.0 // indirect
 	google.golang.org/protobuf v1.24.0 // indirect
 )
